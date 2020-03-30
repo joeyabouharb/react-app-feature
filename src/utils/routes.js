@@ -46,7 +46,7 @@ export const SecureRouter = () => {
             ? createElement(
               component, { ...props, ...rest },
             )
-            : createElement(Redirect, { to: '/' })),
+            : createElement(Redirect, { to: '/login' })),
       },
     ),
   );
@@ -66,7 +66,7 @@ export const GuestRouter = () => {
           ? createElement(
             component, { props, rest },
           )
-          : createElement(Redirect, { to: ' /' })
+          : createElement(Redirect, { to: '/' })
       ),
     },
   ));

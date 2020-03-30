@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './contexts/auth/useAuthContext';
 import { SecureRouter, GuestRouter } from './utils/routes';
 import Header from './components/Header';
