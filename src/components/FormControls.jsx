@@ -7,7 +7,7 @@ const Input = ({
   <div>
     <div>
       <label htmlFor="Email_Username">
-        {{ label }}
+        { label }
         <input
           name={name}
           type={type}
