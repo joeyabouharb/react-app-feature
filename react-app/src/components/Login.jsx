@@ -3,34 +3,45 @@ import { useAuthDispatch } from '../contexts/auth/useAuthContext';
 import { LoginRequest } from '../services/AccountService';
 import { userLogsIn } from '../contexts/auth/actions';
 import Input from './FormControls';
+import Validate from '../utils/validator';
+import ValidLogin from '../models/login';
+
+const errorState = {
+  credential: [],
+  password: [],
+};
+
+const formState = {
+  credential: '',
+  password: '',
+};
 
 const Login = () => {
-  const [formContent, onContentChange] = useState({
-    credential: '',
-    password: '',
-  });
+  const [formContent, onContentChange] = useState(formState);
   const [messages, onMessageChange] = useState('');
+  const [formErrors, onFormError] = useState(errorState);
   const setInputs = (event) => onContentChange({
     ...formContent,
     [event.target.name]: event.target.value,
   });
 
-  const isLoginValid = () => formContent.credential
-    || formContent.password;
-
   const dispatch = useAuthDispatch();
   const onFormSubmit = (event) => {
     event.preventDefault();
-    if (isLoginValid()) {
-      LoginRequest(formContent).then((data) => {
+    Validate(formContent, ValidLogin)
+      .then((content) => LoginRequest(content))
+      .then((data) => {
         dispatch(userLogsIn(data.token));
       }).catch((error) => {
-        onMessageChange(error.message);
+        if (error.message) {
+          onMessageChange([error.message]);
+        } else {
+          onFormError({ ...formErrors, ...error });
+        }
       });
-    } else {
-      onMessageChange('Please fill in your login Credentials');
-    }
   };
+  const credentialErrors = formErrors.credential.map((error) => <p key={error}>{error}</p>);
+  const passwordErrors = formErrors.password.map((error) => <p key={error}>{error}</p>);
   return (
     <form
       onSubmit={onFormSubmit}
@@ -53,6 +64,8 @@ const Login = () => {
         id="Password"
       />
       <p>{messages}</p>
+      { credentialErrors }
+      { passwordErrors }
       <button
         type="submit"
       >
@@ -61,4 +74,5 @@ const Login = () => {
     </form>
   );
 };
+
 export default Login;

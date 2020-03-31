@@ -1,0 +1,19 @@
+19:29:04 GMT+1100 (Australian Eastern Daylight Time) ---Info--- Express has started! Now listening on http://undefined:undefined 
+	at function listen(): on line (/home/joey/projects/minio-app-feature/api/utils/middlewares.js:19:16)
+19:29:04 GMT+1100 (Australian Eastern Daylight Time) ---Error--- unsuccessful connection to database undefined/undefined MongoParseError: URI does not have hostname, domain name and tld
+    at parseSrvConnectionString (/home/joey/projects/minio-app-feature/api/node_modules/mongodb/lib/core/uri_parser.js:41:21)
+    at parseConnectionString (/home/joey/projects/minio-app-feature/api/node_modules/mongodb/lib/core/uri_parser.js:556:12)
+    at connect (/home/joey/projects/minio-app-feature/api/node_modules/mongodb/lib/operations/connect.js:272:3)
+    at /home/joey/projects/minio-app-feature/api/node_modules/mongodb/lib/mongo_client.js:215:5
+    at maybePromise (/home/joey/projects/minio-app-feature/api/node_modules/mongodb/lib/utils.js:719:3)
+    at MongoClient.connect (/home/joey/projects/minio-app-feature/api/node_modules/mongodb/lib/mongo_client.js:211:10)
+    at /home/joey/projects/minio-app-feature/api/node_modules/mongoose/lib/connection.js:709:12
+    at new Promise (<anonymous>)
+    at NativeConnection.Connection.openUri (/home/joey/projects/minio-app-feature/api/node_modules/mongoose/lib/connection.js:706:19)
+    at Mongoose.createConnection (/home/joey/projects/minio-app-feature/api/node_modules/mongoose/lib/index.js:279:17)
+    at Database.connect (/home/joey/projects/minio-app-feature/api/services/Database.js:16:30)
+    at Object.<anonymous> (/home/joey/projects/minio-app-feature/api/index.js:8:40)
+    at Module._compile (internal/modules/cjs/loader.js:1147:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1167:10)
+    at Module.load (internal/modules/cjs/loader.js:996:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:896:14)

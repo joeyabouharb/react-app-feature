@@ -1,60 +1,59 @@
 import React, { useState } from 'react';
-import validator from 'validator';
 import Input from './FormControls';
 import { RegisterRequest } from '../services/AccountService';
+import ValidRegister from '../models/register';
+import Validate from '../utils/validator';
+
+const formState = {
+  username: '',
+  password: '',
+  confirmPassword: '',
+  email: '',
+  bucket: '',
+};
+
+const errorState = {
+  username: [],
+  password: [],
+  confirmPassword: [],
+  email: [],
+  bucket: [],
+};
 
 const Register = () => {
-  const [formContent, onContentChange] = useState({
-    username: '',
-    password: '',
-    confirm_password: '',
-    email: '',
-    bucket: '',
-  });
+  const [formContent, onContentChange] = useState(formState);
+  const [errorContent, onError] = useState(errorState);
   const [messages, onMessageChange] = useState('');
   const setInputs = (event) => onContentChange({
     ...formContent,
     [event.target.name]: event.target.value,
   });
-
-  const isLoginValid = async () => {
-    const formNotNull = await new Promise((resolve) => {
-      Object.entries(formContent).forEach(([key, value]) => {
-        if (!value) {
-          const field = key.replace('_', ' ');
-          resolve({ result: false, field });
-        }
-        resolve({ result: true });
-      });
-    });
-    if (!formNotNull.result) {
-      return Promise.reject(new Error(`${formNotNull.field} was empty`));
-    }
-    if (!validator.matches(/^(?=.{12,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "-]).*$/)) {
-      return Promise.reject(new Error('Password must contain at least 12 characters that have at least 1 lower, upper case and special character'));
-    }
-    if (!validator.isEmail(formContent.email)) {
-      return Promise.reject(new Error());
-    }
-    if (!validator.isAlphanumeric(formContent.username)) {
-      return Promise.reject(new Error('username not valid!'));
-    }
-    if (formContent.password !== formContent.confirm_password) {
-      return Promise.reject(new Error('passwords were not the same!'));
-    }
-    return true;
-  };
   const onFormSubmit = (event) => {
     event.preventDefault();
-    isLoginValid()
-      .then(() => RegisterRequest(formContent))
+    Validate(formContent, ValidRegister)
+      .then((content) => {
+        console.log(JSON.parse(JSON.stringify(content)));
+        return RegisterRequest(content);
+      })
       .then(() => {
+        onError({ ...errorState });
+        onContentChange({ ...formState });
         onMessageChange('new user created!');
       })
-      .catch(({ message }) => {
-        onMessageChange(message);
+      .catch((error) => {
+        if (error.message) {
+          console.log(error);
+          onMessageChange(error.message);
+        } else {
+          onError({ ...errorState, ...error });
+        }
       });
   };
+  const usernameErrors = errorContent.username.map((value) => <p key={value}>{value}</p>);
+  const passwordErrors = errorContent.password.map((value) => <p key={value}>{value}</p>);
+  const confirmErrors = errorContent.confirmPassword.map((value) => <p key={value}>{value}</p>);
+  const bucketErrors = errorContent.bucket.map((value) => <p key={value}>{value}</p>);
+  const emailErrors = errorContent.email.map((value) => <p key={value}>{value}</p>);
   return (
     <form
       onSubmit={onFormSubmit}
@@ -72,7 +71,7 @@ const Register = () => {
         label="Username:"
         name="username"
         type="text"
-        value={formContent.email}
+        value={formContent.username}
         onChange={setInputs}
         id="Username"
       />
@@ -94,13 +93,18 @@ const Register = () => {
       />
       <Input
         label="Confirm Password:"
-        name="confirm_password"
+        name="confirmPassword"
         type="password"
-        value={formContent.confirm_password}
+        value={formContent.confirmPassword}
         onChange={setInputs}
         id="Confirm_Password"
       />
       <p>{messages}</p>
+      { emailErrors }
+      { usernameErrors }
+      { bucketErrors }
+      { passwordErrors }
+      { confirmErrors }
       <button
         type="submit"
       >

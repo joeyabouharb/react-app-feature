@@ -19,7 +19,7 @@ export const LoginRequest = (data) => fetch(
 });
 
 export const RegisterRequest = (data) => fetch(
-  `${URL}/accounts`, {
+  `${URL}/accounts/register`, {
     method: 'POST',
     mode: 'cors',
     credentials: 'same-origin',
@@ -28,4 +28,9 @@ export const RegisterRequest = (data) => fetch(
     },
     body: JSON.stringify(data),
   },
-);
+).then((response) => {
+  if (response.status === 400) {
+    return Promise.reject(response.json());
+  }
+  return response.json();
+}).catch( ({ message }) => Promise.reject(new Error(message)));
