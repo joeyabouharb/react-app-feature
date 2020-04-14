@@ -1,5 +1,5 @@
 
-const URL = 'http://localhost:4545/api';
+const URL = 'https://wekeepyourdata.herokuapp.com/api';
 
 export const LoginRequest = (data) => fetch(
   `${URL}/accounts/login`, {

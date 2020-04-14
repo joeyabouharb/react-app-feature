@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const URL = 'http://localhost:4545/api';
+const URL = 'https://wekeepyourdata.herokuapp.com/api';
 
 export const FilesUpload = (files, access_token) => {
   const data = new FormData();
