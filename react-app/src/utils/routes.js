@@ -1,10 +1,14 @@
-import { createElement } from 'react';
+import { createElement, lazy } from 'react';
 import { Route, Redirect } from 'react-router';
-import Bucket from '../components/Bucket';
-import Login from '../components/Login';
-import Register from '../components/Register';
 import { useAuthContext } from '../contexts/auth/useAuthContext';
 
+const Bucket = lazy(() => import('../components/Bucket/Bucket'));
+const Login = lazy(() => import('../components/Login/Login'));
+const Register = lazy(() => import('../components/Register/Register'))
+
+/**
+ * decleration of secure routes
+ */
 const secureRoutes = [
   {
     path: '/',
@@ -17,7 +21,9 @@ const secureRoutes = [
     exact: true,
   },
 ];
-
+/**
+ * Decleration of guest routes.
+ */
 const guestRoutes = [
   {
     path: '/register',
@@ -30,8 +36,11 @@ const guestRoutes = [
     exact: true,
   },
 ];
-
-export const SecureRouter = () => {
+/**
+ * Component that will return our list of secure routes
+ * will redirect to a guest route if user is unauthenticated
+ */
+export const SecureRouter = Object.freeze(() => {
   const state = useAuthContext();
   return secureRoutes.map(
     ({
@@ -50,9 +59,13 @@ export const SecureRouter = () => {
       },
     ),
   );
-};
+});
 
-export const GuestRouter = () => {
+/**
+ * routes accessible only to guest (unauthenticated users)
+ * authenticated users will not need these routes
+ */
+export const GuestRouter = Object.freeze(() => {
   const state = useAuthContext();
   return guestRoutes.map(({
     path, exact, component, ...rest
@@ -70,4 +83,4 @@ export const GuestRouter = () => {
       ),
     },
   ));
-};
+});

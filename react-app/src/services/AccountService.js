@@ -1,5 +1,5 @@
 
-const URL = 'http://localhost:4444/api';
+const URL = 'http://localhost:4545/api';
 
 export const LoginRequest = (data) => fetch(
   `${URL}/accounts/login`, {
@@ -30,7 +30,8 @@ export const RegisterRequest = (data) => fetch(
   },
 ).then((response) => {
   if (response.status === 400) {
-    return Promise.reject(response.json());
+    console.log(response.status);
+    return Promise.reject(response.json().then((result) => result));
   }
   return response.json();
-}).catch( ({ message }) => Promise.reject(new Error(message)));
+}).catch(async (result) => Promise.reject(await result));
