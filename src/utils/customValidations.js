@@ -19,7 +19,7 @@ function isPassword(value, options, key) {
     ^(?=.{12,})
     (?=.*[a-zA-Z])
     (?=.*[0-9]) 
-    (?=.*[!#$%&? "-]).*$
+    (?=.*[@_^!#$%&? "-]).*$
   `;
   if (!validator.matches(value, Regex(passwordPattern))) {
     return `${key} must be 12 characters long and have at least 1 alphabetic, numeric and special character`;
