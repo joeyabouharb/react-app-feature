@@ -22,7 +22,7 @@ function isPassword(value, options, key) {
     (?=.*[@_^!#$%&? "-]).*$
   `;
   if (!validator.matches(value, Regex(passwordPattern))) {
-    return `${key} must be 12 characters long and have at least 1 alphabetic, numeric and special character`;
+    return `${key} must be 12 characters long and have at least 1 alphabetic, numeric and special characters (@_^!#$%&? "-)`;
   }
   return null;
 }
