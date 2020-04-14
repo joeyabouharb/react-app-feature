@@ -1,0 +1,9 @@
+const types = {
+  ADD_FILES: 'ADD_FILES',
+  CLEAR_FILES: 'CLEAR_FILES',
+  DELETE_FILE: 'DELETE_FILES',
+  ADD_FILE: 'ADD_FILE',
+  MODAL_SLEEPS: 'MODAL_SLEEPS',
+};
+
+export default types;

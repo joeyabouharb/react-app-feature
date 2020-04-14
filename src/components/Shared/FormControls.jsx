@@ -4,9 +4,9 @@ import React from 'react';
 const Input = ({
   name, label, type, value, onChange, id,
 }) => (
-  <div>
-    <div>
-      <label htmlFor="Email_Username">
+  <div className="field">
+    <div className="control">
+      <label htmlFor={name} className="label">
         { label }
         <input
           name={name}
@@ -14,6 +14,7 @@ const Input = ({
           value={value}
           onChange={onChange}
           id={id}
+          className="input is-info"
         />
       </label>
     </div>
