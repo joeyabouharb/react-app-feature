@@ -2,13 +2,13 @@
   "name": "react-app",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "browserslist": [
     "last 1 Chrome version"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel build index.html",
+    "start": "parcel build index.html && node server.js",
     "serve": "parcel index.html",
     "lint": "eslint --init"
   },
