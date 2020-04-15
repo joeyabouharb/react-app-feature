@@ -13,10 +13,10 @@ function isAlphanumeric(value, option, key) {
 }
 
 function validBucketName(value, options, key) {
-  if (key) {
+  if (options) {
     const pattern = '[a-z0-9-]+';
     return !validator.matches(value, Regex(pattern))
-      ? 'must be alphanumeric (lowercase only!)'
+      ? `${key} must be alphanumeric (lowercase only!)`
       : null;
   }
   return null;
