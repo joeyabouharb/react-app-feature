@@ -12,7 +12,15 @@ function isAlphanumeric(value, option, key) {
   return null;
 }
 
-
+function validBucketName(value, options, key) {
+  if (key) {
+    const pattern = '[a-z0-9-]+';
+    return !validator.matches(value, Regex(pattern))
+      ? 'must be alphanumeric (lowercase only!)'
+      : null;
+  }
+  return null;
+}
 
 function isPassword(value, options, key) {
   const passwordPattern = `
@@ -28,4 +36,5 @@ function isPassword(value, options, key) {
 }
 
 export const IsPassword = Object.freeze(isPassword);
-export const IsAlphaNumeric = Object.freeze(isAlphanumeric)
+export const IsAlphaNumeric = Object.freeze(isAlphanumeric);
+export const IsValidBucketName = Object.freeze(validBucketName);

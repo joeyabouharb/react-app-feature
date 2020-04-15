@@ -35,7 +35,7 @@ const ValidRegister = {
   },
   bucket: {
     presence: true,
-    IsAlphaNumeric: true,
+    IsValidBucketName: true,
     length: {
       maximum: 100,
       tooLong: 'name was too long?',
